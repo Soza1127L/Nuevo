@@ -1,0 +1,163 @@
+﻿@page "/productos/nuevo"
+@using FerreteriaApp.Models
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.EntityFrameworkCore
+@inject FerreteriaDbContext DbContext
+@inject NavigationManager Navigation
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold">Agregar Nuevo Artículo</h2>
+            <p class="text-muted mb-0">Llena los datos y guarda el producto en el inventario.</p>
+        </div>
+        <button class="btn btn-secondary" @onclick="VolverAProductos">
+            <i class="oi oi-arrow-left me-2"></i> Volver
+        </button>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+            @if (!string.IsNullOrEmpty(mensajeError))
+            {
+                <div class="alert alert-danger" role="alert">
+                    <strong>Aviso:</strong> @mensajeError
+                </div>
+            }
+
+            @if (mensajeExito != null)
+            {
+                <div class="alert alert-success" role="alert">
+                    <strong>Éxito:</strong> @mensajeExito
+                </div>
+            }
+
+            <EditForm Model="nuevoProducto" OnValidSubmit="GuardarProducto" FormName="NuevoProductoForm">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Nombre del Producto *</label>
+                        <InputText class="form-control" @bind-Value="nuevoProducto.NombreProducto" />
+                        <ValidationMessage For="() => nuevoProducto.NombreProducto" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Marca</label>
+                        <InputText class="form-control" @bind-Value="nuevoProducto.Marca" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Tipo de Producto</label>
+                        <InputSelect TValue="int?" class="form-select" @bind-Value="nuevoProducto.IdTipoProducto">
+                            <option value="">-- Seleccionar --</option>
+                            @foreach (var tipo in tiposProducto)
+                            {
+                                <option value="@tipo.IdTipoProducto">@tipo.NombreTipo</option>
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="() => nuevoProducto.IdTipoProducto" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Proveedor</label>
+                        <InputSelect TValue="int?" class="form-select" @bind-Value="nuevoProducto.IdProveedor">
+                            <option value="">-- Seleccionar --</option>
+                            @foreach (var proveedor in proveedores)
+                            {
+                                <option value="@proveedor.IdProveedor">@proveedor.NombreProveedor</option>
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="() => nuevoProducto.IdProveedor" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Sucursal</label>
+                        <InputSelect TValue="int?" class="form-select" @bind-Value="nuevoProducto.IdSucursal">
+                            <option value="">-- Seleccionar --</option>
+                            @foreach (var sucursal in sucursales)
+                            {
+                                <option value="@sucursal.IdSucursal">@sucursal.NombreSucursal</option>
+                            }
+                        </InputSelect>
+                        <ValidationMessage For="() => nuevoProducto.IdSucursal" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Stock</label>
+                        <InputNumber class="form-control" @bind-Value="nuevoProducto.Stock" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Precio Compra *</label>
+                        <InputNumber class="form-control" @bind-Value="nuevoProducto.PrecioCompra" />
+                        <ValidationMessage For="() => nuevoProducto.PrecioCompra" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Precio Venta *</label>
+                        <InputNumber class="form-control" @bind-Value="nuevoProducto.PrecioVenta" />
+                        <ValidationMessage For="() => nuevoProducto.PrecioVenta" />
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2 mt-3">
+                    <button type="button" class="btn btn-secondary" @onclick="VolverAProductos">Cancelar</button>
+                    <button type="submit" class="btn btn-success" disabled="@guardando">
+                        @(guardando ? "Procesando..." : "Guardar Producto")
+                    </button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    private Producto nuevoProducto = new();
+    private List<TiposProducto> tiposProducto = new();
+    private List<Proveedore> proveedores = new();
+    private List<Sucursale> sucursales = new();
+    private string? mensajeError;
+    private string? mensajeExito;
+    private bool guardando;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try 
+        {
+            tiposProducto = await DbContext.TiposProductos.ToListAsync();
+            proveedores = await DbContext.Proveedores.ToListAsync();
+            sucursales = await DbContext.Sucursales.ToListAsync();
+        }
+        catch (Exception)
+        {
+            mensajeError = "No se pudieron cargar los datos de SQL.";
+        }
+    }
+
+    private async Task GuardarProducto()
+    {
+        mensajeError = null;
+        guardando = true;
+
+        try
+        {
+            DbContext.Productos.Add(nuevoProducto);
+            await DbContext.SaveChangesAsync();
+            
+            mensajeExito = "¡Guardado con éxito!";
+            await Task.Delay(1000);
+            Navigation.NavigateTo("/productos");
+        }
+        catch (Exception ex)
+        {
+            mensajeError = "Detalle técnico: " + (ex.InnerException?.Message ?? ex.Message);
+        }
+        finally
+        {
+            guardando = false;
+        }
+    }
+
+    private void VolverAProductos() => Navigation.NavigateTo("/productos");
+}

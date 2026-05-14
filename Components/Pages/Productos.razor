@@ -1,0 +1,349 @@
+@page "/productos"
+@using FerreteriaApp.Models
+@using Microsoft.EntityFrameworkCore
+@inject FerreteriaDbContext DbContext
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold">Almacén de Ferretería</h2>
+            <p class="text-muted mb-0">Aquí puedes ver los artículos disponibles en el inventario.</p>
+        </div>
+        <a class="btn btn-success px-4 shadow-sm" href="/productos/nuevo">
+            <i class="oi oi-plus me-2"></i> Nuevo Artículo
+        </a>
+    </div>
+
+    <div class="input-group mb-4 shadow-sm">
+        <span class="input-group-text bg-white border-end-0">
+            <i class="oi oi-magnifying-glass text-muted"></i>
+        </span>
+        <input type="text" class="form-control border-start-0"
+               placeholder="Buscar producto, marca o descripción..."
+               @bind="searchTerm" @bind:event="oninput" />
+    </div>
+
+    @if (isLoading)
+    {
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+        </div>
+    }
+    else if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger" role="alert">
+            <strong>Error:</strong> @errorMessage
+        </div>
+    }
+    else
+    {
+        <div class="card border-0 shadow-sm">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="ps-4">Producto</th>
+                            <th>Marca</th>
+                            <th>Tipo</th>
+                            <th class="text-end">Stock</th>
+                            <th class="text-end">Precio compra</th>
+                            <th class="text-end">Precio venta</th>
+                            <th class="text-center">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (FilteredProductos.Any())
+                        {
+                            @foreach (var producto in FilteredProductos)
+                            {
+                                <tr>
+                                    <td class="ps-4">@producto.NombreProducto</td>
+                                    <td>@(producto.Marca ?? "N/A")</td>
+                                    <td>@(producto.IdTipoProductoNavigation?.NombreTipo ?? "N/A")</td>
+                                    <td class="text-end">@producto.Stock</td>
+                                    <td class="text-end">@(producto.PrecioCompra.HasValue ? producto.PrecioCompra.Value.ToString("C") : "N/A")</td>
+                                    <td class="text-end">@(producto.PrecioVenta.HasValue ? producto.PrecioVenta.Value.ToString("C") : "N/A")</td>
+                                    <td class="text-center">
+                                        @if (producto.Stock > 0)
+                                        {
+                                            <span class="badge bg-success">En stock</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">Agotado</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center py-5 text-muted">
+                                    <i class="oi oi-info me-2"></i> No se encontraron artículos.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>
+
+@if (mostrarModal)
+{
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-0">Nuevo Artículo</h5>
+                <small>Completa los datos para agregar el producto al inventario.</small>
+            </div>
+            <button type="button" class="btn btn-light btn-sm" @onclick="CerrarModal">Cerrar</button>
+        </div>
+        <div class="card-body">
+            @if (!string.IsNullOrEmpty(mensajeError))
+            {
+                <div class="alert alert-danger" role="alert">
+                    <strong>Error:</strong> @mensajeError
+                </div>
+            }
+
+            @if (mensajeExito != null)
+            {
+                <div class="alert alert-success" role="alert">
+                    <strong>Éxito:</strong> @mensajeExito
+                </div>
+            }
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold">Nombre del Producto *</label>
+                    <input type="text" class="form-control" @bind="nuevoProducto.NombreProducto" placeholder="Ej: Martillo de Goma">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold">Marca</label>
+                    <input type="text" class="form-control" @bind="nuevoProducto.Marca" placeholder="Ej: Stanley">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Descripción</label>
+                <textarea class="form-control" rows="2" @bind="nuevoProducto.Descripcion" placeholder="Descripción detallada del producto..."></textarea>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label fw-bold">Tipo de Producto *</label>
+                    <select class="form-select" @bind="nuevoProducto.IdTipoProducto">
+                        <option value="0">Seleccionar tipo...</option>
+                        @foreach (var tipo in tiposProducto)
+                        {
+                            <option value="@tipo.IdTipoProducto">@tipo.NombreTipo</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label fw-bold">Proveedor *</label>
+                    <select class="form-select" @bind="nuevoProducto.IdProveedor">
+                        <option value="0">Seleccionar proveedor...</option>
+                        @foreach (var proveedor in proveedores)
+                        {
+                            <option value="@proveedor.IdProveedor">@proveedor.NombreProveedor</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label fw-bold">Sucursal *</label>
+                    <select class="form-select" @bind="nuevoProducto.IdSucursal">
+                        <option value="0">Seleccionar sucursal...</option>
+                        @foreach (var sucursal in sucursales)
+                        {
+                            <option value="@sucursal.IdSucursal">@sucursal.NombreSucursal</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label fw-bold">Stock</label>
+                    <input type="number" class="form-control" @bind="nuevoProducto.Stock" placeholder="Cantidad en inventario">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label fw-bold">Precio de Compra *</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="number" class="form-control" @bind="nuevoProducto.PrecioCompra" placeholder="0.00" step="0.01">
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label fw-bold">Precio de Venta *</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="number" class="form-control" @bind="nuevoProducto.PrecioVenta" placeholder="0.00" step="0.01">
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-muted small mb-3">Los campos marcados con * son obligatorios</div>
+            <div class="d-flex justify-content-end gap-2">
+                <button type="button" class="btn btn-secondary" @onclick="CerrarModal">Cancelar</button>
+                <button type="button" class="btn btn-success" @onclick="GuardarProducto" disabled="@(guardando)">
+                    @if (guardando)
+                    {
+                        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        <text>Guardando...</text>
+                    }
+                    else
+                    {
+                        <text>Guardar Producto</text>
+                    }
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private string searchTerm = "";
+    private List<Producto> productos = new();
+    private bool isLoading = true;
+    private string? errorMessage;
+    
+    // Variables para el modal
+    private bool mostrarModal = false;
+    private Producto nuevoProducto = new();
+    private List<TiposProducto> tiposProducto = new();
+    private List<Proveedore> proveedores = new();
+    private List<Sucursale> sucursales = new();
+    private string? mensajeError;
+    private string? mensajeExito;
+    private bool guardando = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Cargar productos
+            productos = await DbContext.Productos
+                .Include(p => p.IdTipoProductoNavigation)
+                .OrderBy(p => p.NombreProducto)
+                .ToListAsync();
+
+            // Cargar datos para los dropdowns
+            tiposProducto = await DbContext.TiposProductos.ToListAsync();
+            proveedores = await DbContext.Proveedores.ToListAsync();
+            sucursales = await DbContext.Sucursales.ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private IEnumerable<Producto> FilteredProductos => productos.Where(p =>
+        string.IsNullOrWhiteSpace(searchTerm) ||
+        (p.NombreProducto != null && p.NombreProducto.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ||
+        (p.Marca != null && p.Marca.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ||
+        (p.Descripcion != null && p.Descripcion.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ||
+        (p.IdTipoProductoNavigation?.NombreTipo != null && p.IdTipoProductoNavigation.NombreTipo.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+    );
+
+    private void AbrirModal()
+    {
+        nuevoProducto = new();
+        mensajeError = null;
+        mensajeExito = null;
+        mostrarModal = true;
+    }
+
+    private void CerrarModal()
+    {
+        mostrarModal = false;
+        nuevoProducto = new();
+        mensajeError = null;
+        mensajeExito = null;
+    }
+
+    private async Task GuardarProducto()
+    {
+        // Validaciones
+        if (string.IsNullOrWhiteSpace(nuevoProducto.NombreProducto))
+        {
+            mensajeError = "El nombre del producto es obligatorio.";
+            return;
+        }
+
+        if (nuevoProducto.IdTipoProducto == 0)
+        {
+            mensajeError = "Debe seleccionar un tipo de producto.";
+            return;
+        }
+
+        if (nuevoProducto.IdProveedor == 0)
+        {
+            mensajeError = "Debe seleccionar un proveedor.";
+            return;
+        }
+
+        if (nuevoProducto.IdSucursal == 0)
+        {
+            mensajeError = "Debe seleccionar una sucursal.";
+            return;
+        }
+
+        if (nuevoProducto.PrecioCompra <= 0)
+        {
+            mensajeError = "El precio de compra debe ser mayor a 0.";
+            return;
+        }
+
+        if (nuevoProducto.PrecioVenta <= 0)
+        {
+            mensajeError = "El precio de venta debe ser mayor a 0.";
+            return;
+        }
+
+        try
+        {
+            guardando = true;
+            mensajeError = null;
+
+            // Agregar el nuevo producto a la base de datos
+            DbContext.Productos.Add(nuevoProducto);
+            await DbContext.SaveChangesAsync();
+
+            // Recargar el producto guardado para tener la navegación del tipo
+            var productoGuardado = await DbContext.Productos
+                .Include(p => p.IdTipoProductoNavigation)
+                .FirstOrDefaultAsync(p => p.IdProducto == nuevoProducto.IdProducto);
+
+            if (productoGuardado != null)
+            {
+                productos.Add(productoGuardado);
+                productos = productos.OrderBy(p => p.NombreProducto).ToList();
+            }
+
+            mensajeExito = "¡Producto guardado correctamente!";
+            
+            // Limpiar el formulario después de 1.5 segundos
+            await Task.Delay(1500);
+            CerrarModal();
+        }
+        catch (Exception ex)
+        {
+            mensajeError = $"Error al guardar el producto: {ex.Message}";
+        }
+        finally
+        {
+            guardando = false;
+        }
+    }
+}

@@ -1,0 +1,83 @@
+﻿@page "/"
+
+<div class="container-fluid mt-4">
+    <!-- 1. SECCIÓN DE BIENVENIDA (BANNER PRINCIPAL) -->
+    <div class="p-5 bg-white border rounded shadow-sm mb-5">
+        <div class="row align-items-center">
+            <!-- Texto Izquierda -->
+            <div class="col-md-8">
+                <h1 class="display-4 fw-bold" style="color: #1a237e; font-family: 'Segoe UI', sans-serif;">
+                    FERRETERÍA INDUSTRIAL
+                </h1>
+                <p class="lead text-secondary">Sistema de Gestión de Inventario, Ventas y Logística.</p>
+                <hr class="my-4" style="width: 30%; border-top: 3px solid #1a237e; margin-left: 0;">
+                <p class="fst-italic text-muted">Use el menú lateral para navegar entre las secciones de la ferretería.</p>
+            </div>
+
+            <!-- Logo Herramientas Cruzadas -->
+            <div class="col-md-4 text-center">
+                <svg width="180" height="180" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <g filter="drop-shadow(3px 5px 2px rgba(0,0,0,0.2))">
+                        <!-- Llave Inglesa -->
+                        <path d="M20,80 L80,20 M75,15 L85,25 L75,35 L65,25 Z" stroke="#424242" stroke-width="8" stroke-linecap="round" />
+                        <circle cx="20" cy="80" r="5" fill="#1a237e" />
+                        <!-- Destornillador -->
+                        <path d="M20,20 L80,80" stroke="#d32f2f" stroke-width="8" stroke-linecap="round" />
+                        <rect x="15" y="15" width="12" height="25" transform="rotate(-45 20 20)" fill="#424242" rx="2" />
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. SECCIÓN DE CATEGORÍAS (TARJETAS CON ÍCONOS) -->
+    <div class="row g-4 mt-2">
+        @{
+            var categorias = new[] {
+                new { Nombre = "CANDADOS", Icono = "oi-lock-locked" },
+                new { Nombre = "ELÉCTRICO", Icono = "oi-bolt" },
+                new { Nombre = "HERRAJES", Icono = "oi-layers" },
+                new { Nombre = "HERRAMIENTAS", Icono = "oi-wrench" },
+                new { Nombre = "LIMPIEZA", Icono = "oi-droplet" },
+                new { Nombre = "SEGURIDAD", Icono = "oi-shield" }
+            };
+        }
+
+        @foreach (var cat in categorias)
+        {
+            <div class="col-6 col-md-2">
+                <div class="card h-100 text-center border-0 shadow-sm category-hover" style="background-color: #f8f9fa; border-radius: 15px;">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <!-- Círculo blanco con ícono interior -->
+                        <div class="mb-3 d-flex align-items-center justify-content-center bg-white rounded-circle shadow-sm" 
+                             style="width: 65px; height: 65px;">
+                            <i class="oi @cat.Icono" style="font-size: 1.6rem; color: #1a237e;"></i>
+                        </div>
+                        <h6 class="fw-bold" style="font-size: 0.75rem; color: #424242; letter-spacing: 0.5px;">@cat.Nombre</h6>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    /* Efecto de elevación y cambio de color al pasar el mouse */
+    .category-hover {
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+    }
+    .category-hover:hover {
+        transform: translateY(-10px);
+        background-color: #1a237e !important;
+    }
+    /* Cambia el color del texto e ícono a blanco al hacer hover */
+    .category-hover:hover h6, 
+    .category-hover:hover i {
+        color: white !important;
+    }
+    /* El círculo pequeño también puede cambiar ligeramente en hover si gustas */
+    .category-hover:hover .bg-white {
+        background-color: rgba(255,255,255,0.2) !important;
+    }
+</style>
