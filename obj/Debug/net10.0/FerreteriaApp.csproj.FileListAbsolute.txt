@@ -2,6 +2,7 @@ C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\bin\Debug\net10.0\appset
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\bin\Debug\net10.0\appsettings.json
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\bin\Debug\net10.0\FerreteriaApp.staticwebassets.runtime.json
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\bin\Debug\net10.0\FerreteriaApp.staticwebassets.endpoints.json
+C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\bin\Debug\net10.0\FerreteriaApp.exe
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\bin\Debug\net10.0\FerreteriaApp.deps.json
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\bin\Debug\net10.0\FerreteriaApp.runtimeconfig.json
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\bin\Debug\net10.0\FerreteriaApp.dll
@@ -140,6 +141,7 @@ C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\Ferret
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\FerreteriaApp.AssemblyInfo.cs
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\FerreteriaApp.csproj.CoreCompileInputs.cache
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\FerreteriaApp.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\FerreteriaApp.sourcelink.json
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\rjimswa.dswa.cache.json
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
@@ -148,7 +150,6 @@ C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\scoped
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\scopedcss\Components\Layout\ReconnectModal.razor.rz.scp.css
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\scopedcss\bundle\FerreteriaApp.styles.css
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\scopedcss\projectbundle\FerreteriaApp.bundle.scp.css
-C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\compressed\asd6bfv6m0-{0}-khy4lop6wu-khy4lop6wu.gz
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\compressed\p9lqnsy1dw-{0}-bqjiyaj88i-bqjiyaj88i.gz
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\compressed\str124t7mv-{0}-c2jlpeoesf-c2jlpeoesf.gz
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\compressed\rypz27q9ow-{0}-erw9l3u2r3-erw9l3u2r3.gz
@@ -194,6 +195,8 @@ C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\compre
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\compressed\94ke2tcv1l-{0}-63fj8s7r0e-63fj8s7r0e.gz
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\compressed\wo6dso9q8p-{0}-0j3bgjxly4-0j3bgjxly4.gz
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\compressed\t434ogaehh-{0}-abdmv1u4y3-abdmv1u4y3.gz
+C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\compressed\lnodjuxvyc-{0}-qcnkhbt5lj-qcnkhbt5lj.gz
+C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\compressed\75rc1ycvy2-{0}-12rnbzdyyc-12rnbzdyyc.gz
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\compressed\xkase7n4js-{0}-3i0z0y9g92-3i0z0y9g92.gz
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\compressed\m5nn3xvd6x-{0}-3i0z0y9g92-3i0z0y9g92.gz
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\staticwebassets.build.json
@@ -207,7 +210,4 @@ C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\refint
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\FerreteriaApp.pdb
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\FerreteriaApp.genruntimeconfig.cache
 C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\ref\FerreteriaApp.dll
-C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\bin\Debug\net10.0\FerreteriaApp.exe
-c:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\compressed\lnodjuxvyc-{0}-qcnkhbt5lj-qcnkhbt5lj.gz
-c:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\compressed\75rc1ycvy2-{0}-12rnbzdyyc-12rnbzdyyc.gz
-c:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\FerreteriaApp.sourcelink.json
+C:\Users\Admin\Desktop\visual studio code\FerreteriaApp\obj\Debug\net10.0\compressed\asd6bfv6m0-{0}-0684n1gk80-0684n1gk80.gz

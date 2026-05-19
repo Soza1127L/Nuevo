@@ -2,9 +2,9 @@
 @using FerreteriaApp.Models
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.EntityFrameworkCore
+@rendermode InteractiveServer
 @inject FerreteriaDbContext DbContext
 @inject NavigationManager Navigation
-
 <div class="container-fluid py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
@@ -32,15 +32,14 @@
                 </div>
             }
 
-            <EditForm Model="nuevoProducto" OnValidSubmit="GuardarProducto" FormName="NuevoProductoForm">
+            <EditForm Model="nuevoProducto" OnValidSubmit="GuardarProducto">
                 <DataAnnotationsValidator />
-                <ValidationSummary />
-
+                
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label fw-bold">Nombre del Producto *</label>
                         <InputText class="form-control" @bind-Value="nuevoProducto.NombreProducto" />
-                        <ValidationMessage For="() => nuevoProducto.NombreProducto" />
+                        <ValidationMessage For="() => nuevoProducto.NombreProducto" class="text-danger" />
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label fw-bold">Marca</label>
@@ -58,7 +57,7 @@
                                 <option value="@tipo.IdTipoProducto">@tipo.NombreTipo</option>
                             }
                         </InputSelect>
-                        <ValidationMessage For="() => nuevoProducto.IdTipoProducto" />
+                        <ValidationMessage For="() => nuevoProducto.IdTipoProducto" class="text-danger" />
                     </div>
                     <div class="col-md-4 mb-3">
                         <label class="form-label fw-bold">Proveedor</label>
@@ -69,7 +68,7 @@
                                 <option value="@proveedor.IdProveedor">@proveedor.NombreProveedor</option>
                             }
                         </InputSelect>
-                        <ValidationMessage For="() => nuevoProducto.IdProveedor" />
+                        <ValidationMessage For="() => nuevoProducto.IdProveedor" class="text-danger" />
                     </div>
                     <div class="col-md-4 mb-3">
                         <label class="form-label fw-bold">Sucursal</label>
@@ -80,7 +79,7 @@
                                 <option value="@sucursal.IdSucursal">@sucursal.NombreSucursal</option>
                             }
                         </InputSelect>
-                        <ValidationMessage For="() => nuevoProducto.IdSucursal" />
+                        <ValidationMessage For="() => nuevoProducto.IdSucursal" class="text-danger" />
                     </div>
                 </div>
 
@@ -92,12 +91,12 @@
                     <div class="col-md-4 mb-3">
                         <label class="form-label fw-bold">Precio Compra *</label>
                         <InputNumber class="form-control" @bind-Value="nuevoProducto.PrecioCompra" />
-                        <ValidationMessage For="() => nuevoProducto.PrecioCompra" />
+                        <ValidationMessage For="() => nuevoProducto.PrecioCompra" class="text-danger" />
                     </div>
                     <div class="col-md-4 mb-3">
                         <label class="form-label fw-bold">Precio Venta *</label>
                         <InputNumber class="form-control" @bind-Value="nuevoProducto.PrecioVenta" />
-                        <ValidationMessage For="() => nuevoProducto.PrecioVenta" />
+                        <ValidationMessage For="() => nuevoProducto.PrecioVenta" class="text-danger" />
                     </div>
                 </div>
 
@@ -131,7 +130,7 @@
         }
         catch (Exception)
         {
-            mensajeError = "No se pudieron cargar los datos de SQL.";
+            mensajeError = "No se pudieron cargar los catálogos desde SQL.";
         }
     }
 
@@ -146,12 +145,12 @@
             await DbContext.SaveChangesAsync();
             
             mensajeExito = "¡Guardado con éxito!";
-            await Task.Delay(1000);
+            await Task.Delay(1500);
             Navigation.NavigateTo("/productos");
         }
         catch (Exception ex)
         {
-            mensajeError = "Detalle técnico: " + (ex.InnerException?.Message ?? ex.Message);
+            mensajeError = "Error al guardar: " + (ex.InnerException?.Message ?? ex.Message);
         }
         finally
         {

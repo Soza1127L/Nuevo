@@ -58,3 +58,40 @@ h1:focus {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+
+/* Forzar el diseño estilizado de tarjetas y tablas de Bootstrap */
+.card {
+    background-color: #ffffff !important;
+    border-radius: 0.5rem !important;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+    padding: 1.5rem;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    border-collapse: collapse !important;
+}
+
+.table th {
+    background-color: #212529 !important;
+    color: white !important;
+    padding: 0.75rem;
+}
+
+.table td {
+    padding: 0.75rem;
+    border-top: 1px solid #dee2e6 !important;
+}
+
+.form-control, .form-select {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da !important;
+    border-radius: 0.25rem !important;
+}

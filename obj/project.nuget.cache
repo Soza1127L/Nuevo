@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MsXOnZLAn6Y=",
+  "dgSpecHash": "koe/uZk1fAk=",
   "success": true,
-  "projectFilePath": "c:\\Users\\Admin\\Desktop\\visual studio code\\FerreteriaApp\\FerreteriaApp.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\Desktop\\visual studio code\\FerreteriaApp\\FerreteriaApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",

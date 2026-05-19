@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Admin\\Desktop\\visual studio code\\FerreteriaApp\\FerreteriaApp.csproj": {}
+    "C:\\Users\\Admin\\Desktop\\visual studio code\\FerreteriaApp\\FerreteriaApp.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Admin\\Desktop\\visual studio code\\FerreteriaApp\\FerreteriaApp.csproj": {
+    "C:\\Users\\Admin\\Desktop\\visual studio code\\FerreteriaApp\\FerreteriaApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Admin\\Desktop\\visual studio code\\FerreteriaApp\\FerreteriaApp.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\visual studio code\\FerreteriaApp\\FerreteriaApp.csproj",
         "projectName": "FerreteriaApp",
-        "projectPath": "c:\\Users\\Admin\\Desktop\\visual studio code\\FerreteriaApp\\FerreteriaApp.csproj",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\visual studio code\\FerreteriaApp\\FerreteriaApp.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Admin\\Desktop\\visual studio code\\FerreteriaApp\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\visual studio code\\FerreteriaApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
